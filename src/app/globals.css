@@ -1,33 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .progress-bar {
+    @apply min-w-[60px] h-[60px] aspect-[1/1] rounded-[50%];
   }
+  .section__title {
+    @apply pb-4;
+  }
+  .blue {
+    @apply bg-blue-400;
+  }
+  .yellow {
+    @apply bg-yellow-500;
+  }
+  .lightGreen,
+  .success {
+    @apply bg-teal-400;
+  }
+  .lightOrange {
+    @apply bg-red-500;
+  }
+  .icon {
+    @apply text-white;
+  }
+  .btn {
+    @apply px-4 py-1 text-white rounded-lg;
+  }
+
+  .input__field {
+    @apply relative  bg-white  w-full mb-4;
+  }
+
+  .input__icon {
+    @apply absolute top-[20px] right-2 translate-y-[-50%];
+  }
+  .error {
+    @apply text-red-600;
+  }
+}
+body {
+  font-family: "Karla", sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  @apply font-bold;
+}
+h1 {
+  @apply text-[32px] md:text-[40px];
+}
+h2 {
+  @apply text-[20px];
+}
+h3 {
+  @apply text-[18px] md:text-[28px]  leading-[18px] text-nowrap lg:pb-2 capitalize;
+}
+
+p {
+  @apply text-[15px] md:text-[22px] text-gray-500;
+}
+
+strong {
+  @apply text-[16px] md:text-[16px];
+}
+
+input {
+  @apply bg-transparent w-full  py-1 px-2  focus:ring-2 ring-offset-blue-700 ring-offset-0 focus:rounded-lg outline-none border-[1px] border-solid border-gray-400 rounded-[5px];
 }
