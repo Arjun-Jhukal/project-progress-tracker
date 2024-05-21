@@ -46,7 +46,7 @@ export default function Login() {
 
         <GoogleLoginAuth />
 
-        {/* <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <div className="auth__input__field mb-4">
             <label htmlFor="email">Email</label>
             <input type="email" name="email" value={formik.values.email} onChange={formik.handleChange} />
@@ -84,7 +84,7 @@ export default function Login() {
               Sign up
             </Link>
           </p>
-        </form> */}
+        </form>
       </div>
     </div>
   );
