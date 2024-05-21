@@ -22,7 +22,7 @@ const validationSchema = Yup.object({
 const NewProjectInitialValues = {
   projectTitle: "",
   projectDeadline: "",
-  taskTodo: [],
+  taskTodo: [{ value: "" }],
   participant: [],
   getAlert: false,
 };
