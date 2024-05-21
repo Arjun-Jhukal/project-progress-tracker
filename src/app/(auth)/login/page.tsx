@@ -8,7 +8,7 @@ import React from "react";
 import * as Yup from "yup";
 import { IoMdEye, IoIosEyeOff, IoMdEyeOff } from "react-icons/io";
 
-export const loginValidationSchema = Yup.object({
+const loginValidationSchema = Yup.object({
   email: Yup.string().email("Invalid Email").required("email is required"),
   password: Yup.string().min(6, "Password must be at least 6 digit long").required("Password is required"),
 });
