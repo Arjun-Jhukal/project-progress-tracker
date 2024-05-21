@@ -79,7 +79,7 @@ export default function Login() {
           </button>
 
           <p>
-            Dont have an account ?
+            Don&apos;t have an account ?
             <Link href={"/signup"} className="text-blue-500">
               Sign up
             </Link>
