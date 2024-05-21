@@ -7,6 +7,7 @@ import Link from "next/link";
 import React from "react";
 import * as Yup from "yup";
 import { IoMdEye, IoIosEyeOff, IoMdEyeOff } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
 const loginValidationSchema = Yup.object({
   email: Yup.string().email("Invalid Email").required("email is required"),
@@ -15,7 +16,7 @@ const loginValidationSchema = Yup.object({
 
 export default function Login() {
   const { showNotification } = useNotification();
-
+  const router = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const LoginInitialState = {
@@ -39,12 +40,16 @@ export default function Login() {
       }
     },
   });
+
+  const handleLoginSuccess = () => {
+    router.replace("/");
+  };
   return (
     <div className="login">
       <div className="container">
         <h3 className="mb-8 uppercase">Login</h3>
 
-        <GoogleLoginAuth />
+        <GoogleLoginAuth onLoginSuccess={handleLoginSuccess} />
 
         <form onSubmit={formik.handleSubmit}>
           <div className="auth__input__field mb-4">

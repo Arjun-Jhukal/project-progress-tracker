@@ -3,21 +3,19 @@
 import { signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { auth, provider } from "../../../../firebase";
-import { useRouter } from "next/navigation";
 import { useNotification } from "@/context/alertProvider";
 import { useAuth } from "@/context/authProvider";
 
-export default function GoogleLoginAuth() {
-  const router = useRouter();
+export default function GoogleLoginAuth({ onLoginSuccess }: { onLoginSuccess: () => void }) {
   const { showNotification } = useNotification();
   const { token, currentUser } = useAuth();
 
   const signIn = async () => {
     try {
-      signInWithPopup(auth, provider);
+      await signInWithPopup(auth, provider);
 
       if (token || currentUser) {
-        router.replace("/");
+        onLoginSuccess(); // Trigger the callback function passed from the parent component
       }
     } catch (e) {
       showNotification({

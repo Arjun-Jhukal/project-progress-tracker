@@ -40,7 +40,7 @@ export default function Signup() {
   });
 
   return (
-    <section className="login max-w-[450px]">
+    <section className="login max-w-[450px] ">
       <div className="container">
         <h3 className="mb-8 uppercase">Sign Up</h3>
 
