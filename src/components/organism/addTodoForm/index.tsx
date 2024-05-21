@@ -14,9 +14,11 @@ import { db } from "../../../../firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const validationSchema = Yup.object({
-  projectTitle: Yup.string().required("Project name is required").min(2, "Name must be minimum 2 character long"),
+  projectTitle: Yup.string().required("Project name is required").min(2, "Name must be minimum 2 characters long"),
   projectDeadline: Yup.string().required("Deadline is required"),
-  taskTodo: Yup.array().min(1, "There must be at least one task"),
+  taskTodo: Yup.array()
+    .of(Yup.object({ value: Yup.string().required() }))
+    .min(1, "There must be at least one task"),
 });
 
 const NewProjectInitialValues = {
@@ -34,7 +36,7 @@ export default function AddTodoForm() {
 
   const handleTaskRemoval = (index: number) => {
     const newArrayAfterRemoval = formik.values.taskTodo.filter((_, i) => index !== i);
-    formik.setFieldValue("taskTodo", [...newArrayAfterRemoval]);
+    formik.setFieldValue("taskTodo", newArrayAfterRemoval);
   };
 
   const { handlePopupChange } = useContext(ConfirmationContext);
@@ -49,13 +51,8 @@ export default function AddTodoForm() {
         const collectionRef = collection(db, "projects");
 
         const docRef = await addDoc(collectionRef, {
-          ...formik.values,
-          projectTitle: formik.values.projectTitle,
+          ...values,
           projectCreated: serverTimestamp(),
-          projectDeadline: formik.values.projectDeadline,
-          getAlert: formik.values.getAlert,
-          projectParticipants: formik.values.participant,
-          projectTask: formik.values.participant,
         });
 
         formik.resetForm();
@@ -106,21 +103,13 @@ export default function AddTodoForm() {
       <UserSelector />
 
       <label>Tasks</label>
-      <div className="task__list ">
+      <div className="task__list">
         {formik.values.taskTodo.length > 0 ? (
           formik.values.taskTodo.map((item, index) => (
             <div className="grid grid-cols-12 mb-4" key={index.toString()}>
               <div className="col-span-11">
                 <div className="input__field">
-                  <input
-                    type="text"
-                    placeholder="To Do"
-                    name="taskTodo"
-                    onChange={(e) => {
-                      formik.setFieldValue(`taskTodo[${index}].value`, e.target.value);
-                    }}
-                    value={formik.values.taskTodo[index].value}
-                  />
+                  <input type="text" placeholder="To Do" name={`taskTodo[${index}].value`} onChange={formik.handleChange} value={item.value} />
                 </div>
               </div>
               <div className="col-span-1 flex justify-center items-center">
@@ -154,7 +143,7 @@ export default function AddTodoForm() {
           </div>
         )}
       </div>
-      {formik.touched.taskTodo && formik.errors.taskTodo && <span className="text-red-600 ">{formik.errors.taskTodo}</span>}
+      {/* {formik.touched.taskTodo && formik.errors.taskTodo && <span className="text-red-600">{formik.errors.taskTodo}</span>} */}
 
       <div className={`flex justify-between items-center my-4 alert ${!notifyChecked ? "active" : ""}`}>
         <p className="text-[14px] capitalize">Get alert for this project</p>
@@ -164,7 +153,7 @@ export default function AddTodoForm() {
           onClick={(e) => {
             e.preventDefault();
             setNotifyChecked((prev) => !prev);
-            formik.setFieldValue("getAlert", notifyChecked);
+            formik.setFieldValue("getAlert", !notifyChecked);
           }}
         >
           <span className="slider"></span>
