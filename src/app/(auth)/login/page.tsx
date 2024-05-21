@@ -12,6 +12,7 @@ export const loginValidationSchema = Yup.object({
   email: Yup.string().email("Invalid Email").required("email is required"),
   password: Yup.string().min(6, "Password must be at least 6 digit long").required("Password is required"),
 });
+
 export default function Login() {
   const { showNotification } = useNotification();
 
@@ -44,6 +45,7 @@ export default function Login() {
         <h3 className="mb-8 uppercase">Login</h3>
 
         <GoogleLoginAuth />
+
         <form onSubmit={formik.handleSubmit}>
           <div className="auth__input__field mb-4">
             <label htmlFor="email">Email</label>

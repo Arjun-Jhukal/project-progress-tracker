@@ -66,40 +66,42 @@ export default function Home() {
     },
   ];
   return (
-    <main>
-      <Header/>
-      <section className="section py-10">
-        <div className="container">
-          <div className="grid grid-cols-2 xl:grid-cols-4 gap-x-2 gap-y-4">
-            {ProjectStatusData.map((status) => (
-              <div className="col-span-1" key={status.title}>
-                <ProjectStatus title={status.title} classes={status.className} totalTask={status.totalTask} icon={status.icon} />
-              </div>
-            ))}
+    <>
+      <Header />
+      <main>
+        <section className="section py-10">
+          <div className="container">
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-x-2 gap-y-4">
+              {ProjectStatusData.map((status) => (
+                <div className="col-span-1" key={status.title}>
+                  <ProjectStatus title={status.title} classes={status.className} totalTask={status.totalTask} icon={status.icon} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-      <section className="section pb-10">
-        <div className="container">
-          <div className="section__title">
-            <h2>Recent Task</h2>
+        </section>
+        <section className="section pb-10">
+          <div className="container">
+            <div className="section__title">
+              <h2>Recent Task</h2>
+            </div>
+            <div className="grid lg:grid-cols-2 gap-4">
+              {Task.map((item) => (
+                <div className="col-span-1" key={item.projectName}>
+                  <Todo
+                    projectName={item.projectName}
+                    brief={item.brief}
+                    className={item.className}
+                    totalTask={item.totalTask}
+                    progress={item.progress}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="grid lg:grid-cols-2 gap-4">
-            {Task.map((item) => (
-              <div className="col-span-1" key={item.projectName}>
-                <Todo
-                  projectName={item.projectName}
-                  brief={item.brief}
-                  className={item.className}
-                  totalTask={item.totalTask}
-                  progress={item.progress}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      {/* <AddButton /> */}
-    </main>
+        </section>
+        {/* <AddButton /> */}
+      </main>
+    </>
   );
 }
